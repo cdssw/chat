@@ -46,7 +46,7 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
 				Authorization authorization = mapper.readValue(claims, Authorization.class);
 				LocalDateTime exp = LocalDateTime.ofInstant(Instant.ofEpochMilli(authorization.getExp() * 1000), ZoneId.systemDefault());
 				LocalDateTime now = LocalDateTime.now();
-				if(exp.isBefore(now)) {
+				if(exp.isBefore(now)) { // 유효시간만 검사
 					throw new MessagingException("Not Authorization");				
 				}
 			} catch (MessagingException e) {

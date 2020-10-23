@@ -34,6 +34,7 @@ public class Receiver {
 	public void userModified(ChatMessage payload) throws JsonProcessingException {
 		log.info("message='{}'", payload);
 		
+		// 해당 컨텐츠에 작성자와 문의자가 topic으로 연결됨
 		String topic = String.format("/topic/%s/%s-%s", payload.getMeetId(), payload.getLeaderName(), payload.getUsername()); 
 		this.template.convertAndSend(topic, payload);		
 	}

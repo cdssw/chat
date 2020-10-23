@@ -24,6 +24,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableGlobalMethodSecurity(prePostEnabled = true) // PreAuthorize 어노테이션 활성화
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+	// interceptor에서 jwt 파싱을 위해 oauth2 라이브러리를 사용해서 추가했음.
+	// 실제로 security url 검증을 하지는 않음
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable(); // X-Frame-Options 차단 해제
