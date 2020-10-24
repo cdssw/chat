@@ -40,13 +40,17 @@ public class ChatDto {
 		private String username;
 		
 		@NotBlank
+		private String sender;
+		
+		@NotBlank
 		private String message;
 		
 		@Builder
-		public ChatReq(Long meetId, String leaderName, String username, String message) {
+		public ChatReq(Long meetId, String leaderName, String username, String sender, String message) {
 			this.meetId = meetId;
 			this.leaderName = leaderName;
 			this.username = username;
+			this.sender = sender;
 			this.message = message;
 		}
 		
@@ -55,6 +59,7 @@ public class ChatDto {
 					.meetId(meetId)
 					.leaderName(leaderName)
 					.username(username)
+					.sender(sender)
 					.message(message)
 					.build();
 		}
@@ -64,6 +69,7 @@ public class ChatDto {
 					.meetId(meetId)
 					.leaderName(leaderName)
 					.username(username)
+					.sender(sender)
 					.message(message)
 					.build();
 		}

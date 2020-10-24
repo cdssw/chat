@@ -38,13 +38,16 @@ public class Chat extends BaseTimeEntity {
 	
 	private String username;
 	
+	private String sender;
+	
 	private String message;
 	
 	@Builder
-	public Chat(Long meetId, String leaderName, String username, String message) {
+	public Chat(Long meetId, String leaderName, String username, String sender, String message) {
 		this.meetId = meetId;
 		this.leaderName = leaderName;
 		this.username = username;
+		this.sender = sender;
 		this.message = message;
 	}
 }
