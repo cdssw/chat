@@ -32,5 +32,5 @@ public abstract class BaseTimeEntity {
 
 	@CreatedDate // 자동 생성시간
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime inputDt;
+	private LocalDateTime timeStamp;
 }

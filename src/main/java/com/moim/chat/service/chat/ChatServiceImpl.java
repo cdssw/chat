@@ -1,7 +1,11 @@
 package com.moim.chat.service.chat;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.moim.chat.entity.Chat;
 import com.moim.chat.event.Sender;
@@ -9,6 +13,7 @@ import com.moim.chat.except.ChatBusinessException;
 import com.moim.chat.except.ErrorCode;
 import com.moim.chat.repository.ChatRepository;
 import com.moim.chat.service.chat.ChatDto.ChatReq;
+import com.moim.chat.service.chat.ChatDto.Res;
 import com.moim.kafka.ChatMessage;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +34,7 @@ import lombok.AllArgsConstructor;
 @Service
 public class ChatServiceImpl implements ChatService {
 	
+	private ModelMapper modelMapper;
 	private ChatRepository chatRepository;
 	private Sender sender;
 	
@@ -54,10 +60,18 @@ public class ChatServiceImpl implements ChatService {
 		
 		// 발송시간 설정
 		ChatMessage chatMessage = dto.toMessage();
-		chatMessage.setTimeStamp(chat.getInputDt());
+		chatMessage.setTimeStamp(chat.getTimeStamp());
 		
 		// kafka 전송
 		sender.send(topicChat, chatMessage);		
+	}
+
+	@Transactional(readOnly = true) // 성능향상을 위해
+	@Override
+	public Page<Res> getChatListByPage(Pageable pageable) {
+		return chatRepository
+				.findAllByOrderByIdDesc(pageable)
+				.map(m -> modelMapper.map(m, ChatDto.Res.class));
 	}
 
 }

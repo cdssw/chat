@@ -1,5 +1,7 @@
 package com.moim.chat.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.moim.chat.entity.Chat;
@@ -18,4 +20,6 @@ import com.moim.chat.entity.Chat;
  * </pre> 
  */
 public interface ChatRepository extends JpaRepository<Chat, Long> {
+	
+	Page<Chat> findAllByOrderByIdDesc(Pageable pageable);
 }

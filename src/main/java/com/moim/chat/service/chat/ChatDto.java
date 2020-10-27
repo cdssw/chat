@@ -1,5 +1,7 @@
 package com.moim.chat.service.chat;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -10,6 +12,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * ChatDto.java
@@ -74,4 +78,25 @@ public class ChatDto {
 					.build();
 		}
 	}
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@SuperBuilder
+	public static abstract class BaseRes {
+		private Long meetId;
+		private String leaderName;
+		private String username;
+		private String sender;
+		private String message;
+		private LocalDateTime timeStamp;
+	}
+	
+	// 결과 DTO
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@SuperBuilder // 부모의 생성자에 대하여 builder를 사용할수 있게 해준다.
+	public static class Res extends BaseRes {
+	}	
 }
