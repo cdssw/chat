@@ -93,10 +93,10 @@ public class ChatServiceImplTest {
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		Page<Chat> pageList = new PageImpl<>(list, pageable, list.size());
-		given(chatRepository.findHistory(any(ChatDto.ChatHistoryReq.class), any(), any())).willReturn(pageList);
+		given(chatRepository.findHistory(any(ChatDto.ChatHistoryReq.class), any())).willReturn(pageList);
 		
 		// when
-		Page<ChatDto.Res> res = chatServiceImpl.getHistory(his, "cdssw@naver.com", pageable);
+		Page<ChatDto.Res> res = chatServiceImpl.getHistory(his, pageable);
 		
 		// then
 		assertEquals(res.getTotalElements(), 2);

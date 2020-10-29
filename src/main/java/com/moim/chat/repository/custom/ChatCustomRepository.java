@@ -21,5 +21,5 @@ import com.moim.chat.service.chat.ChatDto;
  */
 public interface ChatCustomRepository {
 	
-	Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable);
+	Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, Pageable pageable);
 }

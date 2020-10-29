@@ -89,10 +89,14 @@ public class ChatDto {
 		@NotBlank
 		private String leaderName;
 		
+		@NotBlank
+		private String username;
+		
 		@Builder
-		public ChatHistoryReq(Long meetId, String leaderName) {
+		public ChatHistoryReq(Long meetId, String leaderName, String username) {
 			this.meetId = meetId;
 			this.leaderName = leaderName;
+			this.username = username;
 		}
 	}
 	

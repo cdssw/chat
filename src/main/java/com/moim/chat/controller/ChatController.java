@@ -45,7 +45,6 @@ public class ChatController {
 	@PostMapping("/history")
 	@ResponseStatus(value = HttpStatus.OK)
 	public Page<ChatDto.Res> getHistory(@RequestBody @Valid ChatDto.ChatHistoryReq dto, Pageable pageable, HttpServletRequest req) {
-		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
-		return chatService.getHistory(dto, username, pageable);
+		return chatService.getHistory(dto, pageable);
 	}
 }

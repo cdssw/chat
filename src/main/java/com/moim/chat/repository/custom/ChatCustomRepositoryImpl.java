@@ -39,11 +39,11 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 	}
 	
 	@Override
-	public Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable) {
+	public Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		builder = builder.and(chat.meetId.eq(dto.getMeetId()));
 		builder = builder.and(chat.leaderName.eq(dto.getLeaderName()));
-		builder = builder.and(chat.username.eq(username));
+		builder = builder.and(chat.username.eq(dto.getUsername()));
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
 		
