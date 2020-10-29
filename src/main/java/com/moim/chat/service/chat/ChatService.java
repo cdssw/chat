@@ -19,5 +19,5 @@ import org.springframework.data.domain.Pageable;
 public interface ChatService {
 	
 	void addMessage(ChatDto.ChatReq dto);
-	Page<ChatDto.Res> getChatListByPage(Pageable pageable);
+	Page<ChatDto.Res> getHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable);
 }

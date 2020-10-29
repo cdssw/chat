@@ -80,6 +80,23 @@ public class ChatDto {
 	}
 	
 	@Getter
+	@NoArgsConstructor(access = AccessLevel.PROTECTED)
+	public static class ChatHistoryReq {
+		
+		@NotNull
+		private Long meetId;
+		
+		@NotBlank
+		private String leaderName;
+		
+		@Builder
+		public ChatHistoryReq(Long meetId, String leaderName) {
+			this.meetId = meetId;
+			this.leaderName = leaderName;
+		}
+	}
+	
+	@Getter
 	@Setter
 	@NoArgsConstructor
 	@SuperBuilder

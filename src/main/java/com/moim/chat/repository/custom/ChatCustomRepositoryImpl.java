@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.moim.chat.entity.Chat;
 import com.moim.chat.entity.QChat;
+import com.moim.chat.service.chat.ChatDto;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -37,12 +39,18 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 	}
 	
 	@Override
-	public Page<Chat> findHistory(Pageable pageable) {
+	public Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable) {
+		BooleanBuilder builder = new BooleanBuilder();
+		builder = builder.and(chat.meetId.eq(dto.getMeetId()));
+		builder = builder.and(chat.leaderName.eq(dto.getLeaderName()));
+		builder = builder.and(chat.username.eq(username));
+		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
 		
 		// chat 조회 쿼리를 생성
 		final JPQLQuery<Chat> query = queryFactory
-				.selectFrom(chat);
+				.selectFrom(chat)
+				.where(builder);
 		
 		// 페이징 쿼리로 데이터 조회
 		final List<Chat> list = getQuerydsl().applyPagination(pageable, query).fetch();

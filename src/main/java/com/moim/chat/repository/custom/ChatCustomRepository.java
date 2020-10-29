@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.moim.chat.entity.Chat;
+import com.moim.chat.service.chat.ChatDto;
 
 /**
  * ChatCustomRepository.java
@@ -20,5 +21,5 @@ import com.moim.chat.entity.Chat;
  */
 public interface ChatCustomRepository {
 	
-	Page<Chat> findHistory(Pageable pageable);
+	Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable);
 }

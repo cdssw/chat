@@ -44,7 +44,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.headers().frameOptions().disable(); // X-Frame-Options 차단 해제
 		http.authorizeRequests()
 			.antMatchers(WHITE_LIST).permitAll()
-			.antMatchers(HttpMethod.GET, "/history").authenticated()
+			.antMatchers(HttpMethod.POST, "/history").authenticated()
 			.anyRequest().permitAll();
 	}
 	

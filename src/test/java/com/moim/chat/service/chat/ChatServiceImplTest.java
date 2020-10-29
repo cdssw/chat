@@ -50,6 +50,7 @@ public class ChatServiceImplTest {
 	private Sender sender;
 	
 	private ChatDto.ChatReq dto = null;
+	private ChatDto.ChatHistoryReq his = null;
 
 	@Before
 	public void setUp() {
@@ -60,6 +61,11 @@ public class ChatServiceImplTest {
 				.leaderName("cdssw@naver.com")
 				.username("loh002@naver.com")
 				.message("test message")
+				.build();
+		
+		his = ChatDto.ChatHistoryReq.builder()
+				.meetId(1L)
+				.leaderName("cdssw@naver.com")
 				.build();
 	}
 
@@ -78,7 +84,7 @@ public class ChatServiceImplTest {
 	}
 
 	@Test
-	public void testGetMeetListByPage() {
+	public void testGetHistory() {
 		// given
 		Chat m1 = mock(Chat.class);
 		Chat m2 = mock(Chat.class);
@@ -87,10 +93,10 @@ public class ChatServiceImplTest {
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		Page<Chat> pageList = new PageImpl<>(list, pageable, list.size());
-		given(chatRepository.findHistory(pageable)).willReturn(pageList);
+		given(chatRepository.findHistory(any(ChatDto.ChatHistoryReq.class), any(), any())).willReturn(pageList);
 		
 		// when
-		Page<ChatDto.Res> res = chatServiceImpl.getChatListByPage(pageable);
+		Page<ChatDto.Res> res = chatServiceImpl.getHistory(his, "cdssw@naver.com", pageable);
 		
 		// then
 		assertEquals(res.getTotalElements(), 2);

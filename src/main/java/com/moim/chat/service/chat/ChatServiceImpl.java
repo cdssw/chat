@@ -68,9 +68,9 @@ public class ChatServiceImpl implements ChatService {
 
 	@Transactional(readOnly = true) // 성능향상을 위해
 	@Override
-	public Page<Res> getChatListByPage(Pageable pageable) {
+	public Page<Res> getHistory(ChatDto.ChatHistoryReq dto, String username, Pageable pageable) {
 		return chatRepository
-				.findHistory(pageable)				
+				.findHistory(dto, username, pageable)
 				.map(m -> modelMapper.map(m, ChatDto.Res.class))
 				;
 	}
