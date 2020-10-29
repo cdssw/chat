@@ -87,7 +87,7 @@ public class ChatServiceImplTest {
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		Page<Chat> pageList = new PageImpl<>(list, pageable, list.size());
-		given(chatRepository.findAllByOrderByIdDesc(pageable)).willReturn(pageList);
+		given(chatRepository.findHistory(pageable)).willReturn(pageList);
 		
 		// when
 		Page<ChatDto.Res> res = chatServiceImpl.getChatListByPage(pageable);

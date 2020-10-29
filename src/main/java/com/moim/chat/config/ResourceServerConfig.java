@@ -37,7 +37,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	};
 	
 	// interceptor에서 jwt 파싱을 위해 oauth2 라이브러리를 사용해서 추가했음.
-	// 실제로 security url 검증을 하지는 않음
+	// history는 gateway를 통해 인증후 호출가능
+	// 나머지는 websocket용으로 모두 호출 가능
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable(); // X-Frame-Options 차단 해제

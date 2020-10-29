@@ -1,12 +1,12 @@
-package com.moim.chat.repository;
+package com.moim.chat.repository.custom;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.moim.chat.entity.Chat;
-import com.moim.chat.repository.custom.ChatCustomRepository;
 
 /**
- * ChatRepository.java
+ * ChatCustomRepository.java
  * 
  * @author cdssw
  * @since 10.22, 2020
@@ -18,5 +18,7 @@ import com.moim.chat.repository.custom.ChatCustomRepository;
  * 10.30, 2020    cdssw            최초 생성
  * </pre> 
  */
-public interface ChatRepository extends JpaRepository<Chat, Long>, ChatCustomRepository {
+public interface ChatCustomRepository {
+	
+	Page<Chat> findHistory(Pageable pageable);
 }

@@ -1,4 +1,6 @@
 spring:
+  datasource:
+    data: classpath:data-h2.sql # server 기동시 자동으로 실행될 sql 구문
   h2:
     console: # h2-console 사용
       enabled: true

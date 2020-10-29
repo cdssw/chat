@@ -70,8 +70,9 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public Page<Res> getChatListByPage(Pageable pageable) {
 		return chatRepository
-				.findAllByOrderByIdDesc(pageable)
-				.map(m -> modelMapper.map(m, ChatDto.Res.class));
+				.findHistory(pageable)				
+				.map(m -> modelMapper.map(m, ChatDto.Res.class))
+				;
 	}
 
 }
