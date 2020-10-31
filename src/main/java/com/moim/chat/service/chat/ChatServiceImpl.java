@@ -60,6 +60,7 @@ public class ChatServiceImpl implements ChatService {
 		
 		// 발송시간 설정
 		ChatMessage chatMessage = dto.toMessage();
+		chatMessage.setId(chat.getId());
 		chatMessage.setTimeStamp(chat.getTimeStamp());
 		
 		// kafka 전송

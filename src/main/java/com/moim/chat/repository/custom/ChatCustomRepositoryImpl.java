@@ -44,6 +44,7 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 		builder = builder.and(chat.meetId.eq(dto.getMeetId()));
 		builder = builder.and(chat.leaderName.eq(dto.getLeaderName()));
 		builder = builder.and(chat.username.eq(dto.getUsername()));
+		builder = dto.getId() != null ? builder.and(chat.id.lt(dto.getId())) : builder;
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
 		

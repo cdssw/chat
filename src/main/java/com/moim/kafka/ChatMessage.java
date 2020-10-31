@@ -26,6 +26,7 @@ import lombok.Setter;
 @Setter
 public class ChatMessage {
 
+	private Long id;
 	private Long meetId;
 	private String leaderName;
 	private String username;
@@ -34,7 +35,8 @@ public class ChatMessage {
 	private LocalDateTime timeStamp;
 	
 	@Builder
-	public ChatMessage(Long meetId, String leaderName, String username, String sender, String message) {
+	public ChatMessage(Long id, Long meetId, String leaderName, String username, String sender, String message) {
+		this.id = id;
 		this.meetId = meetId;
 		this.leaderName = leaderName;
 		this.username = username;

@@ -83,6 +83,8 @@ public class ChatDto {
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class ChatHistoryReq {
 		
+		private Long id;
+		
 		@NotNull
 		private Long meetId;
 		
@@ -93,7 +95,8 @@ public class ChatDto {
 		private String username;
 		
 		@Builder
-		public ChatHistoryReq(Long meetId, String leaderName, String username) {
+		public ChatHistoryReq(Long id, Long meetId, String leaderName, String username) {
+			this.id = id;
 			this.meetId = meetId;
 			this.leaderName = leaderName;
 			this.username = username;
@@ -105,6 +108,7 @@ public class ChatDto {
 	@NoArgsConstructor
 	@SuperBuilder
 	public static abstract class BaseRes {
+		private Long id;
 		private Long meetId;
 		private String leaderName;
 		private String username;
