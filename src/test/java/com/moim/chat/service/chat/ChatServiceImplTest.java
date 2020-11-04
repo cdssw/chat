@@ -107,7 +107,7 @@ public class ChatServiceImplTest {
 	@Test
 	public void testGetUnread() {
 		// given
-		given(chatRepository.countByMeetIdAndReadAndReceiver(anyLong(), anyBoolean(), any())).willReturn(10L);
+		given(chatRepository.countByMeetIdAndReadYnAndReceiver(anyLong(), anyBoolean(), any())).willReturn(10L);
 		
 		// when
 		Long count = chatServiceImpl.getUnread(1L, "cdssw@naver.com");

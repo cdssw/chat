@@ -22,7 +22,7 @@ import com.moim.chat.repository.custom.ChatCustomRepository;
  */
 public interface ChatRepository extends JpaRepository<Chat, Long>, ChatCustomRepository {
 	
-	Long countByMeetIdAndReadAndReceiver(long meetId, boolean read, String receiver);
+	Long countByMeetIdAndReadYnAndReceiver(long meetId, boolean read, String receiver);
 	Chat findTop1ByMeetId(long meetId);
 	Long findDistinctByMeetId(long meetId);
 }

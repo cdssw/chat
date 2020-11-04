@@ -94,7 +94,7 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public Long getUnread(long meetId, String username) {
-		return chatRepository.countByMeetIdAndReadAndReceiver(meetId, false, username);
+		return chatRepository.countByMeetIdAndReadYnAndReceiver(meetId, false, username);
 	}
 
 	@Override
