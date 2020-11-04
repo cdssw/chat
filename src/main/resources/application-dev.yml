@@ -4,6 +4,8 @@ spring:
     username: ENC(LUXkkA03UeS85CRYj9aOsg==)
     password: ENC(HLJADQahnDvj53+5Y8r+5EoL2UbtwOj8)
     driver-class-name: org.mariadb.jdbc.Driver
+    data: classpath:data-h2.sql # server 기동시 자동으로 실행될 sql 구문
+    initialization-mode: always
   jpa:
     hibernate:
       # none: 미생성, create: 항상 다시 생성, create-drop: 시작시 생성후 종료시 제거, update: 추가 테이블/컬럼 생성(삭제하진 않음), verify: 비교
