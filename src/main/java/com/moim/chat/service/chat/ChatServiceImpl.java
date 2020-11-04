@@ -1,5 +1,7 @@
 package com.moim.chat.service.chat;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import com.moim.chat.except.ErrorCode;
 import com.moim.chat.repository.ChatRepository;
 import com.moim.chat.service.chat.ChatDto.ChatReq;
 import com.moim.chat.service.chat.ChatDto.Res;
+import com.moim.chat.service.chat.ChatDto.UsersUnreadRes;
 import com.moim.kafka.ChatMessage;
 
 import lombok.AllArgsConstructor;
@@ -51,7 +54,7 @@ public class ChatServiceImpl implements ChatService {
 			throw new ChatBusinessException(ErrorCode.INPUT_VALUE_INVALID);
 		}
 		
-		if("".equals(dto.getLeaderName()) || "".equals(dto.getUsername())) {
+		if("".equals(dto.getLeaderName()) || "".equals(dto.getReceiver())) {
 			throw new ChatBusinessException(ErrorCode.INPUT_VALUE_INVALID);
 		}
 		
@@ -67,13 +70,50 @@ public class ChatServiceImpl implements ChatService {
 		sender.send(topicChat, chatMessage);		
 	}
 
-	@Transactional(readOnly = true) // 성능향상을 위해
+	@Transactional
 	@Override
-	public Page<Res> getHistory(ChatDto.ChatHistoryReq dto, Pageable pageable) {
-		return chatRepository
-				.findHistory(dto, pageable)
+	public Page<Res> postHistory(ChatDto.ChatHistoryReq dto, String receiver, Pageable pageable) {
+		Page<Res> res = chatRepository
+				.findHistory(dto, receiver, pageable)
 				.map(m -> modelMapper.map(m, ChatDto.Res.class))
 				;
+
+		// 데이터가 있을경우 최종 id를 가져온다.
+		if(res.getContent().size() > 0) {
+			long id = res.getContent().get(res.getContent().size() - 1).getId();
+			
+			// 해당 id보다 작으며 read가 false인 데이터를 가져와서 읽음 처리
+			List<Chat> list = chatRepository.findUnread(id, dto.getMeetId(), dto.getSender(), receiver);
+			for(Chat chat : list) {
+				chat.read();
+			}
+		}
+				
+		return res;
+	}
+
+	@Override
+	public Long getUnread(long meetId, String username) {
+		return chatRepository.countByMeetIdAndReadAndReceiver(meetId, false, username);
+	}
+
+	@Override
+	public List<UsersUnreadRes> getUsersUnread(long meetId, String username) {
+		Chat chat = chatRepository.findTop1ByMeetId(meetId);
+		boolean leader = username.equals(chat.getLeaderName()) ? true : false;
+		List<ChatDto.UsersUnreadRes> list = chatRepository.countUsersUnread(meetId, username, leader);
+		return list;
+	}
+
+	@Override
+	public int getCount(long meetId) {
+		List<String> chatCount = chatRepository.findChatCount(meetId);
+		return chatCount.size();
+	}
+
+	@Override
+	public List<Res> getContectList(String username) {
+		return chatRepository.findDistinctBySender(username);
 	}
 
 }

@@ -41,4 +41,18 @@ public class KafkaTopicConfig {
 	public NewTopic topicChat(String topic) {
 		return new NewTopic(topic, 1, (short) 1);
 	}
+	
+	// user-modified 토픽 생성
+	@Bean
+	@Value("${spring.kafka.topic.user-modified}")
+	public NewTopic topicUserModified(String topic) {
+		return new NewTopic(topic, 1, (short) 1);
+	}
+	
+	// user-created 토픽 생성
+	@Bean
+	@Value("${spring.kafka.topic.user-created}")
+	public NewTopic topicUserCreated(String topic) {
+		return new NewTopic(topic, 1, (short) 1);
+	}	
 }

@@ -36,18 +36,25 @@ public class Chat extends BaseTimeEntity {
 	
 	private String leaderName;
 	
-	private String username;
+	private String receiver;
 	
 	private String sender;
 	
 	private String message;
 	
+	private boolean read;
+	
 	@Builder
-	public Chat(Long meetId, String leaderName, String username, String sender, String message) {
+	public Chat(Long meetId, String leaderName, String receiver, String sender, String message, boolean read) {
 		this.meetId = meetId;
 		this.leaderName = leaderName;
-		this.username = username;
+		this.receiver = receiver;
 		this.sender = sender;
 		this.message = message;
+		this.read = read;
+	}
+	
+	public void read() {
+		this.read = true;
 	}
 }

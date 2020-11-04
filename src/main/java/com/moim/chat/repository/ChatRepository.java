@@ -1,5 +1,7 @@
 package com.moim.chat.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.moim.chat.entity.Chat;
@@ -19,4 +21,8 @@ import com.moim.chat.repository.custom.ChatCustomRepository;
  * </pre> 
  */
 public interface ChatRepository extends JpaRepository<Chat, Long>, ChatCustomRepository {
+	
+	Long countByMeetIdAndReadAndReceiver(long meetId, boolean read, String receiver);
+	Chat findTop1ByMeetId(long meetId);
+	Long findDistinctByMeetId(long meetId);
 }

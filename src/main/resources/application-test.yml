@@ -16,9 +16,11 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id: group-chat    
+      group-id: group-chat
     topic:
       chat: topic-chat
+      user-created: topic-user-created
+      user-modified: topic-user-modified
       
 eureka:
   client:

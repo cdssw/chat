@@ -2,6 +2,8 @@ package com.moim.chat.service.chat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -51,7 +53,7 @@ public class ChatServiceImplTest {
 	
 	private ChatDto.ChatReq dto = null;
 	private ChatDto.ChatHistoryReq his = null;
-
+	
 	@Before
 	public void setUp() {
 		ModelMapper modelMapper = new ModelMapper();
@@ -59,14 +61,14 @@ public class ChatServiceImplTest {
 		dto = ChatDto.ChatReq.builder()
 				.meetId(1L)
 				.leaderName("cdssw@naver.com")
-				.username("loh002@naver.com")
+				.receiver("loh002@naver.com")
 				.message("test message")
 				.build();
 		
 		his = ChatDto.ChatHistoryReq.builder()
 				.meetId(1L)
-				.leaderName("cdssw@naver.com")
-				.build();
+				.sender("cdssw@naver.com")
+				.build();		
 	}
 
 	@Test
@@ -84,7 +86,7 @@ public class ChatServiceImplTest {
 	}
 
 	@Test
-	public void testGetHistory() {
+	public void testPostHistory() {
 		// given
 		Chat m1 = mock(Chat.class);
 		Chat m2 = mock(Chat.class);
@@ -93,12 +95,24 @@ public class ChatServiceImplTest {
 		
 		Pageable pageable = PageRequest.of(0, 10);
 		Page<Chat> pageList = new PageImpl<>(list, pageable, list.size());
-		given(chatRepository.findHistory(any(ChatDto.ChatHistoryReq.class), any())).willReturn(pageList);
+		given(chatRepository.findHistory(any(ChatDto.ChatHistoryReq.class), any(), any())).willReturn(pageList);
 		
 		// when
-		Page<ChatDto.Res> res = chatServiceImpl.getHistory(his, pageable);
+		Page<ChatDto.Res> res = chatServiceImpl.postHistory(his, "cdssw@naver.com", pageable);
 		
 		// then
 		assertEquals(res.getTotalElements(), 2);
+	}
+	
+	@Test
+	public void testGetUnread() {
+		// given
+		given(chatRepository.countByMeetIdAndReadAndReceiver(anyLong(), anyBoolean(), any())).willReturn(10L);
+		
+		// when
+		Long count = chatServiceImpl.getUnread(1L, "cdssw@naver.com");
+		
+		// then
+		assertEquals(count, 10L);
 	}
 }

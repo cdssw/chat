@@ -45,6 +45,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers(WHITE_LIST).permitAll()
 			.antMatchers(HttpMethod.POST, "/history").authenticated()
+			.antMatchers(HttpMethod.GET, "/unread/**").authenticated()
 			.anyRequest().permitAll();
 	}
 	

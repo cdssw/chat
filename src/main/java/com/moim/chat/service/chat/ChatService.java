@@ -1,5 +1,7 @@
 package com.moim.chat.service.chat;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,5 +21,9 @@ import org.springframework.data.domain.Pageable;
 public interface ChatService {
 	
 	void addMessage(ChatDto.ChatReq dto);
-	Page<ChatDto.Res> getHistory(ChatDto.ChatHistoryReq dto, Pageable pageable);
+	Page<ChatDto.Res> postHistory(ChatDto.ChatHistoryReq dto, final String receiver, Pageable pageable);
+	Long getUnread(final long meetId, final String username);
+	List<ChatDto.UsersUnreadRes> getUsersUnread(final long meetId, final String username);
+	int getCount(final long meetId);
+	List<ChatDto.Res> getContectList(final String username);
 }

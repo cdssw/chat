@@ -1,5 +1,7 @@
 package com.moim.chat.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -7,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -45,6 +49,38 @@ public class ChatController {
 	@PostMapping("/history")
 	@ResponseStatus(value = HttpStatus.OK)
 	public Page<ChatDto.Res> getHistory(@RequestBody @Valid ChatDto.ChatHistoryReq dto, Pageable pageable, HttpServletRequest req) {
-		return chatService.getHistory(dto, pageable);
+		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
+		return chatService.postHistory(dto, username, pageable);
+	}
+	
+	// 해당 meet에 대한 전체 미확인 카운트
+	@GetMapping("/unread/{meetId}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public Long getUnread(@PathVariable final long meetId, HttpServletRequest req) {
+		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
+		return chatService.getUnread(meetId, username);		
+	}
+	
+	// 해당 meet에 대한 유저별 미확인 카운트
+	// 리더는 모든 사용자 카운트, 지원자는 리더것만 볼수 있음
+	@GetMapping("/unread/users/{meetId}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<ChatDto.UsersUnreadRes> getUsersUnread(@PathVariable final long meetId, HttpServletRequest req) {
+		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
+		return chatService.getUsersUnread(meetId, username);
+	}
+	
+	// 해당 meet에 대한 채팅 진행 건수
+	@GetMapping("/count/{meetId}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public int getCount(@PathVariable final long meetId) {
+		return chatService.getCount(meetId);		
+	}
+	
+	@GetMapping("/contect")
+	@ResponseStatus(value = HttpStatus.OK)
+	public List<ChatDto.Res> getContectList(HttpServletRequest req) {
+		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
+		return chatService.getContectList(username);
 	}
 }

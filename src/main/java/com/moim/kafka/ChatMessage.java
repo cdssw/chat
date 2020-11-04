@@ -29,17 +29,17 @@ public class ChatMessage {
 	private Long id;
 	private Long meetId;
 	private String leaderName;
-	private String username;
+	private String receiver;
 	private String sender;
 	private String message;
 	private LocalDateTime timeStamp;
 	
 	@Builder
-	public ChatMessage(Long id, Long meetId, String leaderName, String username, String sender, String message) {
+	public ChatMessage(Long id, Long meetId, String leaderName, String receiver, String sender, String message) {
 		this.id = id;
 		this.meetId = meetId;
 		this.leaderName = leaderName;
-		this.username = username;
+		this.receiver = receiver;
 		this.sender = sender;
 		this.message = message;
 	}

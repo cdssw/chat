@@ -1,5 +1,7 @@
 package com.moim.chat.repository.custom;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,5 +23,9 @@ import com.moim.chat.service.chat.ChatDto;
  */
 public interface ChatCustomRepository {
 	
-	Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, Pageable pageable);
+	Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, final String receiver, Pageable pageable);
+	List<ChatDto.UsersUnreadRes> countUsersUnread(final Long meetId, final String username, boolean leader);
+	List<Chat> findUnread(long id, long meetId, final String sender, final String receiver);
+	List<String> findChatCount(long meetId);
+	List<ChatDto.Res> findDistinctBySender(String sender);
 }

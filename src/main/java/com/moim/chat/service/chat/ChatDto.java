@@ -41,7 +41,7 @@ public class ChatDto {
 		private String leaderName;
 		
 		@NotBlank
-		private String username;
+		private String receiver;
 		
 		@NotBlank
 		private String sender;
@@ -50,10 +50,10 @@ public class ChatDto {
 		private String message;
 		
 		@Builder
-		public ChatReq(Long meetId, String leaderName, String username, String sender, String message) {
+		public ChatReq(Long meetId, String leaderName, String receiver, String sender, String message) {
 			this.meetId = meetId;
 			this.leaderName = leaderName;
-			this.username = username;
+			this.receiver = receiver;
 			this.sender = sender;
 			this.message = message;
 		}
@@ -62,9 +62,10 @@ public class ChatDto {
 			return Chat.builder()
 					.meetId(meetId)
 					.leaderName(leaderName)
-					.username(username)
+					.receiver(receiver)
 					.sender(sender)
 					.message(message)
+					.read(false)
 					.build();
 		}
 		
@@ -72,7 +73,7 @@ public class ChatDto {
 			return ChatMessage.builder()
 					.meetId(meetId)
 					.leaderName(leaderName)
-					.username(username)
+					.receiver(receiver)
 					.sender(sender)
 					.message(message)
 					.build();
@@ -89,17 +90,13 @@ public class ChatDto {
 		private Long meetId;
 		
 		@NotBlank
-		private String leaderName;
-		
-		@NotBlank
-		private String username;
+		private String sender;
 		
 		@Builder
-		public ChatHistoryReq(Long id, Long meetId, String leaderName, String username) {
+		public ChatHistoryReq(Long id, Long meetId, String sender) {
 			this.id = id;
 			this.meetId = meetId;
-			this.leaderName = leaderName;
-			this.username = username;
+			this.sender = sender;
 		}
 	}
 	
@@ -111,7 +108,7 @@ public class ChatDto {
 		private Long id;
 		private Long meetId;
 		private String leaderName;
-		private String username;
+		private String receiver;
 		private String sender;
 		private String message;
 		private LocalDateTime timeStamp;
@@ -124,4 +121,14 @@ public class ChatDto {
 	@SuperBuilder // 부모의 생성자에 대하여 builder를 사용할수 있게 해준다.
 	public static class Res extends BaseRes {
 	}	
+	
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class UsersUnreadRes {
+		private String sender;
+		private String userNickNm;
+		private String avatarPath;
+		private Long count;
+	}
 }
