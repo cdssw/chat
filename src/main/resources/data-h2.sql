@@ -5,7 +5,7 @@ insert into user(id, username, user_nm, user_nick_nm, phone, time_stamp) values
 , (3, 'michael@naver.com', 'Michael', 'Green','010-1111-1111', now());
 
 -- chat
-insert into chat(leader_name, sender, receiver, meet_id, message, read, time_stamp) values
+insert into chat(leader_name, sender, receiver, meet_id, message, read_yn, time_stamp) values
   ('cdssw@naver.com', 'loh002@naver.com', 'cdssw@naver.com',  1, 'msg 1', false, now())
 , ('cdssw@naver.com', 'loh002@naver.com', 'cdssw@naver.com', 1, 'msg 2', false, now())
 , ('cdssw@naver.com', 'loh002@naver.com', 'cdssw@naver.com', 1, 'msg 3', false, now())
