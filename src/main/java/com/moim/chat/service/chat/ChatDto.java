@@ -65,7 +65,7 @@ public class ChatDto {
 					.receiver(receiver)
 					.sender(sender)
 					.message(message)
-					.read(false)
+					.readYn(false)
 					.build();
 		}
 		

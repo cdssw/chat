@@ -83,7 +83,7 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 						, user.userNickNm
 						, user.avatarPath
 						, new CaseBuilder()
-							.when(chat.read.eq(false)).then(chat.sender.count())
+							.when(chat.readYn.eq(false)).then(chat.sender.count())
 							.otherwise(0L).as("count")
 						))
 				.from(chat)

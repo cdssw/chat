@@ -42,19 +42,19 @@ public class Chat extends BaseTimeEntity {
 	
 	private String message;
 	
-	private Boolean read;
+	private Boolean readYn;
 	
 	@Builder
-	public Chat(Long meetId, String leaderName, String receiver, String sender, String message, Boolean read) {
+	public Chat(Long meetId, String leaderName, String receiver, String sender, String message, Boolean readYn) {
 		this.meetId = meetId;
 		this.leaderName = leaderName;
 		this.receiver = receiver;
 		this.sender = sender;
 		this.message = message;
-		this.read = read;
+		this.readYn = readYn;
 	}
 	
 	public void read() {
-		this.read = true;
+		this.readYn = true;
 	}
 }
