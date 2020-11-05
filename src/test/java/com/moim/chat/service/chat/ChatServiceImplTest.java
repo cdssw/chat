@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDateTime;
@@ -82,7 +83,7 @@ public class ChatServiceImplTest {
 		chatServiceImpl.addMessage(dto);
 		
 		// then
-		verify(sender).send(any(), any());
+		verify(sender, times(2)).send(any(), any());
 	}
 
 	@Test
