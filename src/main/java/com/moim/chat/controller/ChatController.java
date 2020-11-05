@@ -69,7 +69,7 @@ public class ChatController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public List<ChatDto.UsersUnreadRes> getUsersUnread(@PathVariable final long meetId, HttpServletRequest req) {
 		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
-		log.debug(username);
+		log.info("username : ", username);
 		return chatService.getUsersUnread(meetId, username);
 	}
 }
