@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.moim.kafka.ChatMessage;
-
 /**
  * Sender.java
  * 
@@ -21,11 +19,11 @@ import com.moim.kafka.ChatMessage;
  */
 @Component
 public class Sender {
-
-	@Autowired
-	private KafkaTemplate<String, ChatMessage> kafkaTemplate;
 	
-	public void send(String topic, ChatMessage payload) {
+	@Autowired
+	private KafkaTemplate<String, Object> kafkaTemplate;
+
+	public void send(String topic, Object payload) {
 		kafkaTemplate.send(topic, payload);
 	}
 }

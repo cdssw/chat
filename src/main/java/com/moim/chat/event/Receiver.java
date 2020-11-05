@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moim.chat.entity.User;
 import com.moim.chat.repository.UserRepository;
-import com.moim.kafka.ChatMessage;
+import com.moim.kafka.EventMessage;
 import com.moim.kafka.EventUser;
 
 import lombok.AllArgsConstructor;
@@ -39,8 +39,8 @@ public class Receiver {
 	@Autowired
 	private SimpMessagingTemplate template;
 	
-	@KafkaListener(topics = "${spring.kafka.topic.chat}", groupId = "${spring.kafka.consumer.group-id}")
-	public void userModified(ChatMessage payload) throws JsonProcessingException {
+	@KafkaListener(topics = "${spring.kafka.topic.chat-message}", groupId = "${spring.kafka.consumer.group-id}")
+	public void userModified(EventMessage payload) throws JsonProcessingException {
 		log.info("message='{}'", payload);
 		
 		// 해당 컨텐츠에 작성자와 문의자가 topic으로 연결됨

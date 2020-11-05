@@ -110,47 +110,4 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 		
 		return query.fetch();
 	}
-
-	@Override
-	public List<String> findChatCount(long meetId) {
-		BooleanBuilder builder = new BooleanBuilder();
-		builder = builder.and(chat.meetId.eq(meetId));
-		builder = builder.and(chat.sender.ne(chat.leaderName));
-		
-		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
-		
-		// chat 조회 쿼리를 생성
-		final JPQLQuery<String> query = queryFactory
-				.select(Projections.bean(String.class
-						, chat.sender
-						))
-				.from(chat)
-				.where(builder)
-				.groupBy(chat.sender)
-				;
-		
-		return query.fetch();
-	}
-
-	@Override
-	public List<ChatDto.Res> findDistinctBySender(String sender) {
-		BooleanBuilder builder = new BooleanBuilder();
-		builder = builder.and(chat.leaderName.ne(sender));
-		builder = builder.and(chat.sender.eq(sender));
-		
-		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
-		
-		// chat 조회 쿼리를 생성
-		final JPQLQuery<ChatDto.Res> query = queryFactory
-				.select(Projections.bean(ChatDto.Res.class
-						, chat.meetId
-						))
-				.from(chat)
-				.where(builder)
-				.groupBy(chat.meetId)
-				;
-		
-		return query.fetch();
-	}
-
 }

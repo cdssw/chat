@@ -69,18 +69,4 @@ public class ChatController {
 		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
 		return chatService.getUsersUnread(meetId, username);
 	}
-	
-	// 해당 meet에 대한 채팅 진행 건수
-	@GetMapping("/count/{meetId}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public int getCount(@PathVariable final long meetId) {
-		return chatService.getCount(meetId);		
-	}
-	
-	@GetMapping("/contect")
-	@ResponseStatus(value = HttpStatus.OK)
-	public List<ChatDto.Res> getContectList(HttpServletRequest req) {
-		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
-		return chatService.getContectList(username);
-	}
 }

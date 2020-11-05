@@ -24,7 +24,7 @@ import org.springframework.kafka.core.KafkaAdmin;
  * 10.30, 2020    cdssw            최초 생성
  * </pre>
  */
-@Profile("!test")
+//@Profile("!test")
 @Configuration
 public class KafkaTopicConfig {
 
@@ -39,7 +39,7 @@ public class KafkaTopicConfig {
 	}
 	
 	@Bean
-	@Value("${spring.kafka.topic.chat}")
+	@Value("${spring.kafka.topic.chat-message}")
 	public NewTopic topicChat(String topic) {
 		return new NewTopic(topic, 1, (short) 1);
 	}
@@ -56,5 +56,11 @@ public class KafkaTopicConfig {
 	@Value("${spring.kafka.topic.user-created}")
 	public NewTopic topicUserCreated(String topic) {
 		return new NewTopic(topic, 1, (short) 1);
-	}	
+	}
+	
+	@Bean
+	@Value("${spring.kafka.topic.chat-created}")
+	public NewTopic topicChatCreated(String topic) {
+		return new NewTopic(topic, 1, (short) 1);
+	}
 }

@@ -24,7 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class ChatMessage {
+public class EventMessage {
 
 	private Long id;
 	private Long meetId;
@@ -35,7 +35,7 @@ public class ChatMessage {
 	private LocalDateTime timeStamp;
 	
 	@Builder
-	public ChatMessage(Long id, Long meetId, String leaderName, String receiver, String sender, String message) {
+	public EventMessage(Long id, Long meetId, String leaderName, String receiver, String sender, String message) {
 		this.id = id;
 		this.meetId = meetId;
 		this.leaderName = leaderName;

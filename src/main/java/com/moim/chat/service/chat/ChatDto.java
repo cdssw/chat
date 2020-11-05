@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.moim.chat.entity.Chat;
-import com.moim.kafka.ChatMessage;
+import com.moim.kafka.EventMessage;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -69,8 +69,8 @@ public class ChatDto {
 					.build();
 		}
 		
-		public ChatMessage toMessage() {
-			return ChatMessage.builder()
+		public EventMessage toMessage() {
+			return EventMessage.builder()
 					.meetId(meetId)
 					.leaderName(leaderName)
 					.receiver(receiver)

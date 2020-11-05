@@ -1,5 +1,6 @@
 package com.moim.chat.service.chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -17,7 +18,8 @@ import com.moim.chat.repository.ChatRepository;
 import com.moim.chat.service.chat.ChatDto.ChatReq;
 import com.moim.chat.service.chat.ChatDto.Res;
 import com.moim.chat.service.chat.ChatDto.UsersUnreadRes;
-import com.moim.kafka.ChatMessage;
+import com.moim.kafka.EventChat;
+import com.moim.kafka.EventMessage;
 
 import lombok.AllArgsConstructor;
 /**
@@ -41,11 +43,16 @@ public class ChatServiceImpl implements ChatService {
 	private ChatRepository chatRepository;
 	private Sender sender;
 	
-	private static String topicChat;
-	
-	@Value("${spring.kafka.topic.chat}")
+	private static String topicChatMessage;
+	@Value("${spring.kafka.topic.chat-message}")
 	private void setTopicChat(String topic) {
-		topicChat = topic;
+		topicChatMessage = topic;
+	}
+	
+	private static String topicChatCreated;
+	@Value("${spring.kafka.topic.chat-created}")
+	private void setTopicChatCreated(String topic) {
+		topicChatCreated = topic;
 	}
 
 	@Override
@@ -61,13 +68,9 @@ public class ChatServiceImpl implements ChatService {
 		// DB에 저장
 		Chat chat = chatRepository.save(dto.toEntity());
 		
-		// 발송시간 설정
-		ChatMessage chatMessage = dto.toMessage();
-		chatMessage.setId(chat.getId());
-		chatMessage.setTimeStamp(chat.getTimeStamp());
-		
 		// kafka 전송
-		sender.send(topicChat, chatMessage);		
+		sender.send(topicChatMessage, modelMapper.map(chat, EventMessage.class));		
+		sender.send(topicChatCreated, modelMapper.map(chat, EventChat.class));
 	}
 
 	@Transactional
@@ -100,20 +103,11 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<UsersUnreadRes> getUsersUnread(long meetId, String username) {
 		Chat chat = chatRepository.findTop1ByMeetId(meetId);
-		boolean leader = username.equals(chat.getLeaderName()) ? true : false;
-		List<ChatDto.UsersUnreadRes> list = chatRepository.countUsersUnread(meetId, username, leader);
-		return list;
+		if(chat != null) {
+			boolean leader = username.equals(chat.getLeaderName()) ? true : false;
+			List<ChatDto.UsersUnreadRes> list = chatRepository.countUsersUnread(meetId, username, leader);
+			return list;
+		}
+		return new ArrayList<>();
 	}
-
-	@Override
-	public int getCount(long meetId) {
-		List<String> chatCount = chatRepository.findChatCount(meetId);
-		return chatCount.size();
-	}
-
-	@Override
-	public List<Res> getContectList(String username) {
-		return chatRepository.findDistinctBySender(username);
-	}
-
 }

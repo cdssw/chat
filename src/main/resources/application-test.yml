@@ -18,9 +18,10 @@ spring:
     consumer:
       group-id: group-chat
     topic:
-      chat: topic-chat
+      chat-message: topic-chat-message
       user-created: topic-user-created
       user-modified: topic-user-modified
+      chat-created: topic-chat-created
       
 eureka:
   client:
