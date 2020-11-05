@@ -46,8 +46,10 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 	public Page<Chat> findHistory(ChatDto.ChatHistoryReq dto, String receiver, Pageable pageable) {
 		BooleanBuilder builder = new BooleanBuilder();
 		builder = builder.and(chat.meetId.eq(dto.getMeetId()));
-		builder = builder.and(chat.sender.eq(dto.getSender()).and(chat.receiver.eq(receiver)));
-		builder = builder.or(chat.sender.eq(receiver).and(chat.receiver.eq(dto.getSender())));
+		builder = builder.and(
+					(chat.sender.eq(dto.getSender()).and(chat.receiver.eq(receiver))).or
+					(chat.sender.eq(receiver).and(chat.receiver.eq(dto.getSender())))
+				);
 		builder = dto.getId() != null ? builder.and(chat.id.lt(dto.getId())) : builder;
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
