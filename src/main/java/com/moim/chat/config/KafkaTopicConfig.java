@@ -24,7 +24,7 @@ import org.springframework.kafka.core.KafkaAdmin;
  * 10.30, 2020    cdssw            최초 생성
  * </pre>
  */
-//@Profile("!test")
+@Profile("!test")
 @Configuration
 public class KafkaTopicConfig {
 

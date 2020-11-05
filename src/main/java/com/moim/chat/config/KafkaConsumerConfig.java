@@ -30,7 +30,7 @@ import com.moim.kafka.EventMessage;
  * 10.30, 2020    cdssw            최초 생성
  * </pre>
  */
-//@Profile("!test")
+@Profile("!test")
 @Configuration
 @EnableKafka
 public class KafkaConsumerConfig {
