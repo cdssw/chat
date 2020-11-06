@@ -91,7 +91,7 @@ public class ChatCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 				.from(chat)
 				.innerJoin(user).on(chat.sender.eq(user.username))
 				.where(builder)
-				.groupBy(chat.sender);
+				.groupBy(chat.sender, chat.readYn);
 		
 		return query.fetch();
 	}
