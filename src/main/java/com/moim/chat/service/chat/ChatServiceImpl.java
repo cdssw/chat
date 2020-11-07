@@ -110,4 +110,11 @@ public class ChatServiceImpl implements ChatService {
 		}
 		return new ArrayList<>();
 	}
+
+	@Transactional
+	@Override
+	public void putRead(long id, String username) {
+		Chat chat = chatRepository.findByIdAndReceiver(id, username);
+		chat.read();
+	}
 }

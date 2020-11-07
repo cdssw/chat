@@ -24,4 +24,5 @@ public interface ChatService {
 	Page<ChatDto.Res> postHistory(ChatDto.ChatHistoryReq dto, final String receiver, Pageable pageable);
 	Long getUnread(final long meetId, final String username);
 	List<ChatDto.UsersUnreadRes> getUsersUnread(final long meetId, final String username);
+	void putRead(final long id, final String username);
 }

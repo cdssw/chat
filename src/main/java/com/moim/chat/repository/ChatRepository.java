@@ -23,4 +23,5 @@ public interface ChatRepository extends JpaRepository<Chat, Long>, ChatCustomRep
 	Long countByMeetIdAndReadYnAndReceiver(long meetId, boolean read, String receiver);
 	Chat findTop1ByMeetId(long meetId);
 	Long findDistinctByMeetId(long meetId);
+	Chat findByIdAndReceiver(long id, String receiver);
 }

@@ -44,7 +44,10 @@ public class Receiver {
 		log.info("message='{}'", payload);
 		
 		// 해당 컨텐츠에 작성자와 문의자가 topic으로 연결됨
-		String topic = String.format("/topic/%s/%s-%s", payload.getMeetId(), payload.getLeaderName(), payload.getReceiver()); 
+		String topic = String.format("/topic/%s/%s-%s"
+				, payload.getMeetId()
+				, payload.getLeaderName()
+				, payload.getLeaderName().equals(payload.getReceiver()) ? payload.getSender() : payload.getReceiver()); 
 		this.template.convertAndSend(topic, payload);		
 	}
 
