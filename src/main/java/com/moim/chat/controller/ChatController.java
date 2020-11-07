@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,5 +69,13 @@ public class ChatController {
 	public List<ChatDto.UsersUnreadRes> getUsersUnread(@PathVariable final long meetId, HttpServletRequest req) {
 		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
 		return chatService.getUsersUnread(meetId, username);
+	}
+	
+	// 메시지 읽음 처리
+	@PutMapping("/read/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public void putRead(@PathVariable final long id, HttpServletRequest req) {
+		String username = req.getHeader("username"); // gateway에서 보내준 username header를 추출
+		chatService.putRead(id, username);
 	}
 }
