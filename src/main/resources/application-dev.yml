@@ -18,7 +18,7 @@ spring:
     serialization:
       fail-on-empty-beans: false # lazy loading으로 인해 json serialize 오류 방지
   kafka:
-    bootstrap-servers: 39.122.244.62:9092
+    bootstrap-servers: 61.253.92.239:9092
     consumer:
       group-id: group-chat    
     topic:
